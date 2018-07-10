@@ -51,14 +51,14 @@
                             Width="200"
                             TextChanged="SoundSuggestBox_TextChanged"
                             QuerySubmitted="SoundSuggestBox_QuerySubmitted"
-                            SuggestionChosen="SoundSuggestBox_SuggestionChosen"
+                            SuggestionChosen="SoundSuggestBox_SuggestionChosen"  
                             QueryIcon="Find"
                             RelativePanel.AlignVerticalCenterWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
                             Margin="0,0,10,0"/>
         </RelativePanel>
 
-        <SplitView Grid.Row="1" Name="MySplitView" CompactPaneLength="45" OpenPaneLength="200" DisplayMode="CompactOverlay">
+        <SplitView Grid.Row="1" Name="MySplitView" CompactPaneLength="45" OpenPaneLength="200" DisplayMode="CompactOverlay" PaneBackground="Beige">
             <SplitView.Pane>
                 <ListView Name="MenuListView" 
                           IsItemClickEnabled="True" 
@@ -84,6 +84,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
+                    
                     <MediaElement Name="MyMediaPlayer" AutoPlay="True"/>
                     
                     <TextBlock Name="CategoryTextBlock" Margin="10,10,0,0" Text="All Sounds" FontSize="36"/>
@@ -105,6 +106,7 @@
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
+
                 </Grid>
             </SplitView.Content>
         </SplitView>
