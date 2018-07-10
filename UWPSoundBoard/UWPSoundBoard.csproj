@@ -98,6 +98,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\Sound.cs" />
+    <Compile Include="Models\SoundManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +110,39 @@
     <None Include="UWPSoundBoard_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Audio\Animals\Cat.wav" />
+    <Content Include="Assets\Audio\Animals\Cow.wav" />
+    <Content Include="Assets\Audio\Cartoons\Gun.wav" />
+    <Content Include="Assets\Audio\Cartoons\Spring.wav" />
+    <Content Include="Assets\Audio\Taunts\Clock.wav" />
+    <Content Include="Assets\Audio\Taunts\LOL.wav" />
+    <Content Include="Assets\Audio\Warnings\Ship.wav" />
+    <Content Include="Assets\Audio\Warnings\Siren.wav" />
+    <Content Include="Assets\Icons\animals.png" />
+    <Content Include="Assets\Icons\cartoon.png" />
+    <Content Include="Assets\Icons\taunt.png" />
+    <Content Include="Assets\Icons\warning.png" />
+    <Content Include="Assets\Images\Animals\Cat.png" />
+    <Content Include="Assets\Images\Animals\Cow.png" />
+    <Content Include="Assets\Images\Cartoons\Gun.png" />
+    <Content Include="Assets\Images\Cartoons\Spring.png" />
+    <Content Include="Assets\Images\Taunts\Clock.png" />
+    <Content Include="Assets\Images\Taunts\LOL.png" />
+    <Content Include="Assets\Images\Warnings\Ship.png" />
+    <Content Include="Assets\Images\Warnings\Siren.png" />
+    <Content Include="Assets\PackageAppXManifest\1240x1240.png" />
+    <Content Include="Assets\PackageAppXManifest\1240x600.png" />
+    <Content Include="Assets\PackageAppXManifest\24x24-large.png" />
+    <Content Include="Assets\PackageAppXManifest\24x24.png" />
+    <Content Include="Assets\PackageAppXManifest\300x300.png" />
+    <Content Include="Assets\PackageAppXManifest\310x310.png" />
+    <Content Include="Assets\PackageAppXManifest\50x50-large.png" />
+    <Content Include="Assets\PackageAppXManifest\50x50.png" />
+    <Content Include="Assets\PackageAppXManifest\620x300.png" />
+    <Content Include="Assets\PackageAppXManifest\71x71-large.png" />
+    <Content Include="Assets\PackageAppXManifest\71x71.png" />
+    <Content Include="Assets\PackageAppXManifest\88x88-large.png" />
+    <Content Include="Assets\PackageAppXManifest\88x88.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
