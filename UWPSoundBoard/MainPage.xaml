@@ -51,6 +51,7 @@
                             Width="200"
                             TextChanged="SoundSuggestBox_TextChanged"
                             QuerySubmitted="SoundSuggestBox_QuerySubmitted"
+                            SuggestionChosen="SoundSuggestBox_SuggestionChosen"
                             QueryIcon="Find"
                             RelativePanel.AlignVerticalCenterWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
