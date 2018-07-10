@@ -44,6 +44,8 @@ namespace UWPSoundBoard
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+
+            Sounds.ToList().ForEach(p => AllSounds.Add(p.Name));
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -61,14 +63,21 @@ namespace UWPSoundBoard
 
         private void SoundSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            SoundSuggestBox.ItemsSource = AllSounds.Where(p => p.ToLower().Contains(SoundSuggestBox.Text.ToLower())).Any()?
+                AllSounds.Where(p => p.ToLower().Contains(SoundSuggestBox.Text.ToLower())) : new List<string> { "No Results"};
             
-            
-             
         }
 
         private void SoundSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-
+            var filteredItems = Sounds.Where(p => p.Name.ToLower() == SoundSuggestBox.Text.ToLower()).ToList();
+            if(filteredItems.Any())
+            {
+                Sounds.Clear();
+                filteredItems.ForEach(p => Sounds.Add(p));
+            }
+            
+            
         }
 
         private void MenuListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -114,6 +123,13 @@ namespace UWPSoundBoard
                     }
                 }
             }
+        }
+
+        private void SoundSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            var item = Sounds.Where(p => p.Name.ToLower() == args.SelectedItem.ToString().ToLower()).ToList();
+            Sounds.Clear();
+            item.ForEach(p => Sounds.Add(p));
         }
     }
 }
