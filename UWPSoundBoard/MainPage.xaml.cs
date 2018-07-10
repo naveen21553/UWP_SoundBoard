@@ -70,14 +70,23 @@ namespace UWPSoundBoard
 
         private void SoundSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            SoundManager.GetAllSounds(Sounds);
             var filteredItems = Sounds.Where(p => p.Name.ToLower() == SoundSuggestBox.Text.ToLower()).ToList();
-            if(filteredItems.Any())
+            if (filteredItems.Any())
             {
                 Sounds.Clear();
                 filteredItems.ForEach(p => Sounds.Add(p));
+                BackButton.Visibility = Visibility.Visible;
             }
-            
-            
+        }
+
+        private void SoundSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            SoundManager.GetAllSounds(Sounds);
+            var item = Sounds.Where(p => p.Name.ToLower() == args.SelectedItem.ToString().ToLower()).ToList();
+            Sounds.Clear();
+            item.ForEach(p => Sounds.Add(p));
+            BackButton.Visibility = Visibility.Visible;
         }
 
         private void MenuListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -125,11 +134,6 @@ namespace UWPSoundBoard
             }
         }
 
-        private void SoundSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            var item = Sounds.Where(p => p.Name.ToLower() == args.SelectedItem.ToString().ToLower()).ToList();
-            Sounds.Clear();
-            item.ForEach(p => Sounds.Add(p));
-        }
+        
     }
 }
