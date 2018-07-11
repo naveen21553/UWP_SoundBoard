@@ -29,6 +29,10 @@ namespace UWPSoundBoard
         private ObservableCollection<Sound> Sounds;
         private List<string> AllSounds = new List<string>();
         private List<MenuItem> MenuItems;
+        private TimeSpan TotalTime;
+        private TimeSpan RunningTime = new TimeSpan(0,0,0);
+        public DispatcherTimer timerPlayTime { get; private set; }
+
 
         public MainPage()
         {
@@ -63,6 +67,12 @@ namespace UWPSoundBoard
 
         private void SoundSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            if(string.IsNullOrEmpty(SoundSuggestBox.Text))
+            {
+                SoundManager.GetAllSounds(Sounds);
+                CategoryTextBlock.Text = "All Sounds";
+                MenuListView.SelectedItem = null;
+            }
             SoundSuggestBox.ItemsSource = AllSounds.Where(p => p.ToLower().Contains(SoundSuggestBox.Text.ToLower())).Any()?
                 AllSounds.Where(p => p.ToLower().Contains(SoundSuggestBox.Text.ToLower())) : new List<string> { "No Results"};
             
@@ -77,6 +87,8 @@ namespace UWPSoundBoard
                 Sounds.Clear();
                 filteredItems.ForEach(p => Sounds.Add(p));
                 BackButton.Visibility = Visibility.Visible;
+                CategoryTextBlock.Text = SoundSuggestBox.Text;
+                MenuListView.SelectedItem = null;
             }
         }
 
@@ -86,6 +98,7 @@ namespace UWPSoundBoard
             var item = Sounds.Where(p => p.Name.ToLower() == args.SelectedItem.ToString().ToLower()).ToList();
             Sounds.Clear();
             item.ForEach(p => Sounds.Add(p));
+            MenuListView.SelectedItem = null;
             BackButton.Visibility = Visibility.Visible;
         }
 
@@ -128,12 +141,65 @@ namespace UWPSoundBoard
                     if(contentType == "audio/mpeg" || contentType == "audio/wav")
                     {
                         MyMediaPlayer.SetSource(await storageFile.OpenAsync(FileAccessMode.Read), contentType);
-                        MyMediaStoryBoard.Begin();
+                        MyMediaPlayer.Play();
+                        PlayPauseButton.Content = "\xE769";
+                        
                     }
                 }
             }
         }
 
-        
+        private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (PlayPauseButton.Content.ToString() == "\xE768")
+            {
+                PlayPauseButton.Content = "\xE769";
+                if(RunningTime != TotalTime)
+                {
+                    MyMediaPlayer.Position = RunningTime;
+                    timerPlayTime.Start();
+                    MyMediaPlayer.Play();
+
+                }
+
+            }
+            else if (PlayPauseButton.Content.ToString() == "\xE769")
+            {
+                PlayPauseButton.Content = "\xE768";
+                MyMediaPlayer.Stop();
+                timerPlayTime.Stop();
+            }
+            
+        }
+
+        private void MyMediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            PlayPauseButton.Content = "\xE768";
+        }
+
+        private void MyMediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            TotalTime = MyMediaPlayer.NaturalDuration.TimeSpan;
+            TotalTimeTextBlock.Text = TotalTime.Hours.ToString() + ":" + TotalTime.Minutes.ToString() + ":" + TotalTime.Seconds.ToString();
+            MediaSlider.Maximum = TotalTime.TotalSeconds;
+            timerPlayTime = new DispatcherTimer();
+            timerPlayTime.Interval = TimeSpan.FromSeconds(1);
+            timerPlayTime.Tick += delegate
+            {
+                if (MyMediaPlayer.NaturalDuration.TimeSpan.TotalSeconds > 0)
+                {
+                    if (TotalTime.TotalSeconds > 0)
+                    {
+                        MediaSlider.Value = MyMediaPlayer.Position.TotalSeconds;
+                        RunningTime += new TimeSpan(0, 0, 1);
+                        CurrentTimeTextBlock.Text = RunningTime.Hours.ToString() + ":" +  RunningTime.Minutes.ToString() + ":" + RunningTime.Seconds.ToString();
+                    }
+                }
+            };
+            timerPlayTime.Start();
+        }
+
+
     }
 }

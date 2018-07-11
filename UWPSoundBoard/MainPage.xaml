@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <RelativePanel Background="Green">
@@ -67,9 +68,9 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:MenuItem">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                 <Image Source="{x:Bind IconFile}" Width="32" Margin="-8,10,0,10"/>
-                                <TextBlock Text="{x:Bind Category}" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Category}" FontSize="18" Margin="20,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -85,7 +86,7 @@
                     </Grid.RowDefinitions>
 
                     
-                    <MediaElement Name="MyMediaPlayer" AutoPlay="True"/>
+                    <MediaElement Name="MyMediaPlayer" AutoPlay="True" MediaEnded="MyMediaPlayer_MediaEnded" Volume="1" MediaOpened="MyMediaPlayer_MediaOpened"/>
                     
                     <TextBlock Name="CategoryTextBlock" Margin="10,10,0,0" Text="All Sounds" FontSize="36"/>
 
@@ -110,5 +111,38 @@
                 </Grid>
             </SplitView.Content>
         </SplitView>
+
+        <StackPanel Grid.Row="2" Background="SteelBlue">
+            <RelativePanel>
+                <TextBlock Name="CurrentTimeTextBlock" RelativePanel.AlignLeftWithPanel="True" Margin="10,10,5,0" Text="0:00:00"/>
+                <Slider Name="MediaSlider" Margin="20,0,20,0" RelativePanel.RightOf="CurrentTimeTextBlock" RelativePanel.LeftOf="TotalTimeTextBlock" Maximum="{x:Bind MyMediaPlayer.NaturalDuration.TimeSpan.TotalSeconds}"/>
+                <TextBlock Name="TotalTimeTextBlock" Margin="5,10,10,0" Text="0:00:00" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+            
+           
+            <RelativePanel>
+                <StackPanel RelativePanel.AlignHorizontalCenterWithPanel="True" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button Name="PreviousButton" 
+                            FontSize="22" 
+                            FontFamily="Segoe MDL2 Assets" 
+                            Background="Transparent" 
+                            Content="&#xE760;"/>
+                        
+                    <Button Name="PlayPauseButton" 
+                            FontSize="28" 
+                            FontFamily="Segoe MDL2 Assets" 
+                            Background="Transparent" 
+                            Content="&#xE768;" 
+                            Click="PlayPauseButton_Click"/>
+
+                    <Button Name="NextButton" 
+                            FontSize="22" 
+                            FontFamily="Segoe MDL2 Assets" 
+                            Content="&#xE761;" 
+                            Background="Transparent"/>
+
+                </StackPanel>
+            </RelativePanel>
+        </StackPanel>
     </Grid>
 </Page>
