@@ -9,5 +9,5 @@ Music Player for Universal Windows
 - Hamburger style Navigation between sound category
 
 Known bugs-
-- Seekbar has unidirectional binding, i.e., 
+- Seekbar has unidirectional binding, i.e.,
   it changes with position of music but changing slider don't change position of music
